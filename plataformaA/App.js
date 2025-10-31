@@ -1,4 +1,5 @@
 import logo from "./assets/logo.png"
+
 import 
 { 
   StyleSheet, 
@@ -6,10 +7,33 @@ import
   Image,
   Text, 
   TextInput,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert
 } from 'react-native';
 
+import {useState} from 'react'
+
 export default function App() {
+  const [usuario, setUsuario] = useState("");
+  const [senha, setSenha] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const validate = ()=>
+    {
+      if(usuario.length < 11)
+        {
+          setErrorMessage('Usuário inválido');
+        }
+      else if(senha.length < 6)
+        {
+          setErrorMessage('Senha inválida');
+        }
+      else
+        {
+          Alert.alert("Login", "Login realizado com sucesso!")
+        }
+    }
+
   return (
     <View style={styles.container}>
       <View style={styles.card}>
@@ -17,20 +41,38 @@ export default function App() {
           source={logo}
           style={styles.logo}
         />
-        <Text style={styles.title}>Seja bem-vindo</Text>
+
+        { String(errorMessage).length > 0 ? <Text style={styles.error}>{errorMessage}</Text> : null}
+
         <TextInput
           placeholder="Usuário"
           keyboardType="numeric"
           placeholderTextColor= '#9aa0a6'
           style={styles.input}
+          onChangeText={(texto) =>
+            {
+              if(texto.length < usuario.length)
+                {
+                  setErrorMessage("")
+                }
+              setUsuario(texto)
+            }}
         />
         <TextInput
           placeholder="Senha"
           placeholderTextColor= '#9aa0a6'
           style={styles.input}
           secureTextEntry
+          onChangeText={(texto) =>
+            {
+              if(texto.length < senha.length)
+                {
+                  setErrorMessage("")
+                }
+              setSenha(texto)
+            }}
         />
-        <TouchableOpacity style={styles.button}>
+        <TouchableOpacity style={styles.button}  onPress={validate}>
           <Text style={styles.buttonText}>Entrar</Text>
         </TouchableOpacity>
         <View style={styles.rowBetween}>
@@ -116,5 +158,12 @@ const styles = StyleSheet.create({
   {
     marginHorizontal: 10,
     color: '#9aa0a6'
+  },
+  error:
+  {
+    color: '#c8003c',
+    textAlign: 'center',
+    marginBottom: 8,
+
   }
 });
