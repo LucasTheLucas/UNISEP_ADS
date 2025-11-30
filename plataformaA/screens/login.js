@@ -5,12 +5,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  Alert
 } from 'react-native';
 import logo from "../assets/logo.png";
 import { useState } from 'react';
 
-export default function Login({navigator}) {
+export default function Login({navigation}) {
 
   const [user, setUser] = useState();
   const [password, setPassword] = useState();
@@ -23,7 +22,7 @@ export default function Login({navigator}) {
     } else if (String(password).length < 6) {
       setErrorMessage('Senha inválida!');
     } else {
-      Alert.alert('Login', 'Login realizado com sucesso! 👍');
+      navigation.navigate("perfil")
     }
   }
 
