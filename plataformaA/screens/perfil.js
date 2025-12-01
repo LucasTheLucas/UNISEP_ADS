@@ -91,7 +91,7 @@ const styles = StyleSheet.create
             flexDirection: "row",
             alignItems: "center",
             padding: 15
-            },
+        },
         cardTitulo:
         {
             fontSize: 14,
